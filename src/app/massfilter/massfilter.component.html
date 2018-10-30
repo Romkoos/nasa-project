@@ -1,0 +1,24 @@
+<div class="form-group mass-filter">
+  <div class="input-group mb-3">
+      <input
+        #massField
+        type="number" 
+        class="form-control" 
+        id="mass" 
+        placeholder="Enter a mass"
+        aria-describedby="button-addon2"
+      >
+      <div class="input-group-append">
+        <button 
+          (click)="filterByMass(massField.value)"
+          class="btn btn-outline-secondary" 
+          type="button" 
+          id="button-addon2"
+        >Filter</button>
+      </div>
+  </div>
+
+
+
+
+</div>

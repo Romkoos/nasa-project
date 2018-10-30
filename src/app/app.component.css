@@ -1,0 +1,35 @@
+/*reset start*/
+html, body, div, span,
+h1, h2, h3, h4, h5, h6, p, 
+small, strong, ol, ul, li, form, label, 
+article, aside, 
+figure, figcaption, section {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+/*reset end*/
+
+.container{
+    padding: 15px;
+    margin: 0 auto;
+}
+
+img.logo {
+    width: 150px;
+    margin: 0 auto;
+    display: block;
+}

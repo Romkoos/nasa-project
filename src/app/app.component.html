@@ -1,0 +1,15 @@
+<img src="http://pluspng.com/img-png/nasa-logo-png--445.png" alt="Nasa" class="logo">
+<div class="container">
+  <app-yearpicker></app-yearpicker>
+  <div class="list-group">
+      <div *ngIf="(meteorsState | async).errors && (meteorsState | async).errors.noMeteorsByYear">No meteors this year, try another one, sorry :(</div>
+      <div *ngIf="(meteorsState | async).errors && (meteorsState | async).errors.noMeteorsByMass">No meteors this year with this mass, but you can see the another one :)</div>
+      <div *ngIf="(meteorsState | async).errors && (meteorsState | async).errors.noMeteors">Nothing :( Sorry, but try another mass</div>
+      <app-meteor
+        class="meteorItem"
+        [meteor]="c"
+        *ngFor='let c of (meteorsState | async).meteors'
+      ></app-meteor>
+  </div>
+  <app-massfilter></app-massfilter>
+</div>
