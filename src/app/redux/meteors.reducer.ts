@@ -1,5 +1,5 @@
 import { METEOR_ACTION, MeteorsActions } from './meteors.action'
-import { Meteor } from '../meteor.model';
+import { Meteor } from '../meteor.model'
 
 const initialState = {
     meteors : []
@@ -14,6 +14,19 @@ export function meteorsReducer(state = initialState, action: MeteorsActions){
                 meteors: [...action.payload]
             }
 
+        case  METEOR_ACTION.GET_YEARS_LIST:
+            const meteorsListSortedByYears = state.meteors
+            const yearsArray = []
+            for (let i in meteorsListSortedByYears){ 
+               yearsArray.push(meteorsListSortedByYears[i].year)
+                 
+            }
+            yearsArray.sort(function (a, b) {return a - b})
+            let yearsArrayFiltered = yearsArray.filter((v, i, a) => a.indexOf(v) === i)
+            return {
+                ...state,
+                yearsList: [...yearsArrayFiltered]
+            }
         case METEOR_ACTION.FILTER_BY_YEAR:
 
             const newState = state
@@ -22,6 +35,7 @@ export function meteorsReducer(state = initialState, action: MeteorsActions){
             let hiddenElements: number = 0
             let isError: boolean = false
             let isFatalError: boolean = false
+            let ayear: number = 0
 
             if(targetYear !== 0){
                 for (let i in meteorsList){
@@ -33,18 +47,21 @@ export function meteorsReducer(state = initialState, action: MeteorsActions){
                         meteorsList[i].hidden = false
                         hiddenElements--
                     }
-                }     
+                }
+                ayear = targetYear     
             }else{
                 for (let i in meteorsList){
                     meteorsList[i].hidden = false
                     hiddenElements = 0
                 }
+                ayear = 0
             }
             if(hiddenElements === meteorsList.length) isError = true
 
             return {
                 ...state,
                 meteors: [...meteorsList],
+                activeYear: ayear,
                 errors : {
                     noMeteorsByYear : isError
                 }
@@ -56,7 +73,7 @@ export function meteorsReducer(state = initialState, action: MeteorsActions){
             const targetMass = action.payload
             let meteorsListByMass: Meteor[] = []
             let closestMeteor 
-            console.log(targetMass);
+            let activeYear: number
             
             if(targetMass !== undefined && targetMass !== null && !isNaN(targetMass) ){ 
                 const result = meteorsListFBYear.find( sortedByMass => sortedByMass.mass === targetMass)
@@ -69,6 +86,7 @@ export function meteorsReducer(state = initialState, action: MeteorsActions){
                         }
                         closestMeteor.hidden = false
                         meteorsListByMass = closestMeteor
+                        activeYear = closestMeteor.year
                         isError = true
                         isFatalError = false
                     }else{
@@ -90,6 +108,7 @@ export function meteorsReducer(state = initialState, action: MeteorsActions){
             return {
                 ...state,
                 meteors: [...meteorsListFBYear],
+                activeYear : activeYear,
                 errors : {
                     noMeteorsByMass : isError,
                     noMeteors: isFatalError
@@ -101,13 +120,13 @@ export function meteorsReducer(state = initialState, action: MeteorsActions){
 }
 
 function closest(array,num){
-    let minDiff=1000;
+    let minDiff=1000
     let ans;
     for(let i in array){
-         var m=Math.abs(num-array[i].mass);
+         var m=Math.abs(num-array[i].mass)
          if(m<minDiff){ 
-                minDiff=m; 
-                ans=array[i]; 
+                minDiff=m
+                ans=array[i] 
             }
       }
     return ans;

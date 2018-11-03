@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http'
 
 import { AppState } from './redux/app.state'
 import { Observable } from 'rxjs'
-import { GetMeteors } from './redux/meteors.action'
+import { GetMeteors, GetYearsList } from './redux/meteors.action'
 
 
 @Component({
@@ -48,6 +48,7 @@ export class AppComponent implements OnInit {
                       )
       }
       this.store.dispatch(new GetMeteors(this.meteors))
+      this.store.dispatch(new GetYearsList())
       return true
     })
   }
