@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { AppState } from '../redux/app.state'
-import { FilterMeteorsByYear, GetYearsList } from '../redux/meteors.action'
+import { FilterMeteorsByYear } from '../redux/meteors.action'
 import { Observable } from 'rxjs';
 import { Meteors } from '../meteor.model';
 
